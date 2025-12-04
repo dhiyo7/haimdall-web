@@ -24,7 +24,7 @@ export const Roadmap: React.FC = () => {
             <h2 className="font-sans font-black text-4xl md:text-5xl mb-6 leading-tight">
               Roadmap &<br/>Masa Depan
             </h2>
-            <div className="font-mono text-base md:text-lg mb-8 leading-relaxed bg-white border-2 border-black p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative">
+            <div className="font-mono text-base md:text-lg mb-8 leading-relaxed bg-white border-2 border-black p-6 shadow-retro relative">
               <p>
                 Heimdall terus berevolusi. Berikut adalah fitur-fitur canggih yang sedang kami racik di laboratorium agar testing semakin santuy.
               </p>

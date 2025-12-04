@@ -43,7 +43,7 @@ export const Features: React.FC = () => {
               title={feature.title} 
               date={`STACK-0${idx + 1}`}
               noPadding={!!feature.imageUrl}
-              className="group transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_#000,0_0_20px_rgba(0,0,0,0.2)]"
+              className="group transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-retro-xl"
             >
               {feature.imageUrl && (
                  <div className="w-full h-48 border-b-2 border-black overflow-hidden relative">

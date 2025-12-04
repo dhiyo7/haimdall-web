@@ -16,7 +16,7 @@ export const WindowCard: React.FC<WindowCardProps> = ({
   noPadding = false
 }) => {
   return (
-    <div className={`border-2 border-black bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full ${className}`}>
+    <div className={`border-2 border-black bg-white shadow-retro-lg flex flex-col h-full ${className}`}>
       {/* Window Header */}
       <div className="border-b-2 border-black bg-gray-200 px-3 py-2 flex items-center justify-between">
         <div className="flex gap-2">

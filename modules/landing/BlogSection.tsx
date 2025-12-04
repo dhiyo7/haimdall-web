@@ -17,7 +17,7 @@ export const BlogSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
             <WindowCard title="cara-buat-script.heim" date="TUTORIAL" className="bg-white">
                <div className="aspect-video w-full bg-gray-100 border-2 border-black mb-4 overflow-hidden flex items-center justify-center p-8 bg-dots">
-                  <div className="font-mono text-xs md:text-sm bg-white border-2 border-black p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] w-full">
+                  <div className="font-mono text-xs md:text-sm bg-white border-2 border-black p-4 shadow-retro w-full">
                     <p className="text-gray-500"># Skenario Login</p>
                     <p><span className="font-bold text-blue-600">Buka</span> aplikasi "com.app"</p>
                     <p><span className="font-bold text-blue-600">Ketik</span> "user" pada "Email"</p>
