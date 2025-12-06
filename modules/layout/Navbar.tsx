@@ -3,11 +3,11 @@ import { Menu, X } from 'lucide-react';
 import { NavLink } from '../../types';
 
 const links: NavLink[] = [
+  { label: 'Beranda', href: '#home' },
   { label: 'Tentang', href: '#about' },
-  { label: 'Fitur', href: '#features' },
   { label: 'Dokumentasi', href: '#docs' },
+  { label: 'Fitur', href: '#other-features' },
   { label: 'Roadmap', href: '#roadmap' },
-  { label: 'Clone Repo', href: 'https://github.com/dhiyo7/heimdall' },
 ];
 
 export const Navbar: React.FC = () => {

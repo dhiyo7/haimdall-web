@@ -54,11 +54,34 @@ export const languageFeatures = [
 ];
 
 export const syntaxHighlight = (line: string) => {
-    return line.replace(/(\".*?\")|(#.*)|\\b(SIMPAN|KE|JIKA|AKHIR JIKA|ULANGI|KALI:|AKHIR ULANGI|JALANKAN|TEKAN TOMBOL SISTEM|Buka|Ketik|Ketuk|Pastikan)\\b/g, (match) => {
-      if (match.startsWith('#')) return `<span class="text-gray-400">${match}</span>`;
-      if (match.startsWith('"')) return `<span class="text-green-600">${match}</span>`;
-      const keywords = ['SIMPAN', 'KE', 'JIKA', 'AKHIR JIKA', 'ULANGI', 'KALI:', 'AKHIR ULANGI', 'JALANKAN', 'TEKAN TOMBOL SISTEM', 'Buka', 'Ketik', 'Ketuk', 'Pastikan'];
-      if (keywords.includes(match)) return `<span class="text-blue-600 font-bold">${match}</span>`;
-      return match;
-    });
-  };
+  // Escape specific regex characters in keywords if needed, though mostly they are letters
+  // Improved regex to handle smart quotes and standard quotes
+
+  // First, let's process the line to replace patterns with temporary placeholders to avoid overlapping replacements?
+  // Actually, a single comprehensive regex with capturing groups or a split approach is better.
+  // But since we want to return HTML string, let's use a function that tokenizes or just multiple replaces if carefully ordered.
+  // However, the simplest way for this specific simple syntax is to use a replacer function with a master regex.
+
+  // Master regex for:
+  // 1. Comments (#...)
+  // 2. Strings ("..." or “...”)
+  // 3. Variables ({...})
+  // 4. Keywords
+
+  const keywords = [
+    'SIMPAN', 'KE', 'JIKA', 'AKHIR JIKA', 'ULANGI', 'KALI:', 'AKHIR ULANGI',
+    'JALANKAN', 'TEKAN TOMBOL SISTEM', 'Buka', 'Ketik', 'Ketuk', 'Pastikan'
+  ];
+
+  const keywordPattern = keywords.join('|').replace(/ /g, '\\s+'); // Handle spaces in keywords like AKHIR JIKA
+
+  const regex = new RegExp(`(#.*)|(["“].*?["”])|(\\{.*?\\})|\\b(${keywordPattern})\\b`, 'g');
+
+  return line.replace(regex, (match, comment, string, variable, keyword) => {
+    if (comment) return `<span class="text-gray-500 italic">${match}</span>`;
+    if (string) return `<span class="text-green-600 font-bold">${match}</span>`;
+    if (variable) return `<span class="text-orange-600 font-bold">${match}</span>`;
+    if (keyword) return `<span class="text-blue-600 font-black">${match}</span>`;
+    return match;
+  });
+};

@@ -43,14 +43,14 @@ export const Roadmap: React.FC = () => {
                   <AccordionItem key={phaseIndex} title={phase.phase}>
                     <div className="space-y-3 p-4">
                       <p className="font-mono text-sm text-gray-600 mb-3">{phase.description}</p>
-                      {phase.features.map((feature, featureIndex) => (
+                      {phase.features.map((feature: any, featureIndex) => (
                         <div key={featureIndex} className="flex items-start gap-3">
                           {feature.done ? <CheckSquare className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" /> : <Square className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />}
                           <div className="flex-grow">
                             <div className="font-mono text-sm">{feature.title}</div>
                             {feature.subFeatures && (
                               <ul className="list-disc list-inside mt-2 space-y-1 pl-4">
-                                {feature.subFeatures.map((sub, subIndex) => (
+                                {feature.subFeatures.map((sub: string, subIndex: number) => (
                                   <li key={subIndex} className="font-mono text-xs">{sub}</li>
                                 ))}
                               </ul>
