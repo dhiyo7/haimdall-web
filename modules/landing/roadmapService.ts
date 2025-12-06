@@ -3,7 +3,7 @@ import { roadmapData as fallbackData } from './roadmapData';
 
 const GITHUB_README_URL = 'https://raw.githubusercontent.com/dhiyo7/heimdall/main/Readme.md';
 
-export const fetchRoadmap = async (): Promise<RoadmapPhase[]> => {
+export const fetchRoadmap = async (): Promise<RoadmapPhase[] | null> => {
     try {
         const response = await fetch(GITHUB_README_URL);
         if (!response.ok) throw new Error('Failed to fetch README');
@@ -11,11 +11,11 @@ export const fetchRoadmap = async (): Promise<RoadmapPhase[]> => {
         return parseRoadmap(text);
     } catch (error) {
         console.error('Error fetching roadmap:', error);
-        return fallbackData; // Fallback to local data
+        return null; // Return null to indicate failure, UI should handle fallback
     }
 };
 
-const parseRoadmap = (markdown: string): RoadmapPhase[] => {
+const parseRoadmap = (markdown: string): RoadmapPhase[] | null => {
     const phases: RoadmapPhase[] = [];
     const lines = markdown.split('\n');
     let currentPhase: RoadmapPhase | null = null;
@@ -39,11 +39,22 @@ const parseRoadmap = (markdown: string): RoadmapPhase[] => {
 
         // Detect Phase Header
         // Example: #### **✅ PHASE 1: THE FOUNDATION (Selesai)**
-        if (line.startsWith('#### **')) {
+        // New Example: ### ✅ PHASE 1: THE FOUNDATION (Pondasi Fisik)
+        // Regex allows ### or ####, captures everything after space.
+        const phaseHeaderMatch = line.match(/^(#{3,4})\s+(.*)/);
+
+        if (phaseHeaderMatch) {
             if (currentPhase) phases.push(currentPhase);
 
-            // Clean up the phase title (remove markdown bold/header chars)
-            const phaseTitle = line.replace(/#{4}\s*\*\*(.*?)\*\*/, '$1').trim();
+            // Captured group 2 is the raw title line. Clean up bolding if present.
+            let phaseTitle = phaseHeaderMatch[2].trim();
+            // Remove leading/trailing **
+            phaseTitle = phaseTitle.replace(/^\*\*(.*)\*\*$/, '$1');
+
+            // Further cleanup if it has ** prefix but not suffix or vice versa? 
+            // Better: just remove all ** if they surround it? 
+            // Or just remove ** generally? No, some parts might be bold.
+            // Let's assume title is either fully bolded or not.
 
             currentPhase = {
                 phase: phaseTitle,
@@ -56,14 +67,17 @@ const parseRoadmap = (markdown: string): RoadmapPhase[] => {
             let nextLineIndex = i + 1;
             while (nextLineIndex < lines.length) {
                 const nextLine = lines[nextLineIndex].trim();
-                if (nextLine && !nextLine.startsWith('* [')) {
-                    // It's likely a description line
+                if (nextLine && !nextLine.startsWith('* ') && !nextLine.startsWith('- ')) {
+                    // It's likely a description line if it starts with * or just text
                     const descMatch = nextLine.match(/^\*(.*?)\*$/);
                     if (descMatch) {
                         currentPhase.description = descMatch[1];
+                    } else {
+                        // Maybe just text?
+                        currentPhase.description = nextLine;
                     }
                     break; // Found description or text, stop looking
-                } else if (nextLine.startsWith('* [')) {
+                } else if (nextLine.match(/^[\*\-]\s*\[/)) {
                     break; // Hit a feature list, stop looking
                 }
                 nextLineIndex++;
@@ -73,8 +87,9 @@ const parseRoadmap = (markdown: string): RoadmapPhase[] => {
 
         // Detect Feature
         // Example: * [x] **Title:** Description
+        // or: - [x] **Title:** Description
         // or: * \[x\] **Title:** Description (escaped)
-        const featureMatch = line.match(/^\*\s*\\?\[([ xX])\\?\]/);
+        const featureMatch = line.match(/^[\*\-]\s*\\?\[([ xX])\\?\]/);
         if (featureMatch && currentPhase) {
             const isDone = featureMatch[1].toLowerCase() === 'x';
 
@@ -108,7 +123,8 @@ const parseRoadmap = (markdown: string): RoadmapPhase[] => {
 
         // Detect Subfeature
         // Example:   * **Dashboard GUI:** Text
-        const subMatch = line.match(/^\s*\*\s*\*\*(.*?)\*\*(.*)/);
+        // New Example:     - **Robust Find:** Text
+        const subMatch = line.match(/^\s*[\*\-]\s*\*\*(.*?)\*\*(.*)/);
         if (subMatch && currentPhase && currentPhase.features.length > 0) {
             // This is a sub-feature of the last added feature
             const lastFeature = currentPhase.features[currentPhase.features.length - 1];
@@ -134,7 +150,7 @@ const parseRoadmap = (markdown: string): RoadmapPhase[] => {
     // Push the last phase
     if (currentPhase) phases.push(currentPhase);
 
-    return phases.length > 0 ? phases : fallbackData;
+    return phases.length > 0 ? phases : null;
 };
 
 export const parseMarkdown = (text: string): string => {
