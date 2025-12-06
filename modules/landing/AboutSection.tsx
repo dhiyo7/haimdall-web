@@ -6,11 +6,11 @@ export const AboutSection: React.FC = () => {
     <section id="about" className="bg-retro-bg py-16 md:py-24 border-b-4 border-black scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row gap-12">
-          
+
           {/* Left Column: Heading & Origin */}
           <div className="md:w-1/3 space-y-8">
             <h2 className="font-sans font-black text-4xl md:text-5xl leading-none">
-              👁️<br/>Apa itu<br/>Heimdall?
+              👁️<br />Apa itu<br />Heimdall?
             </h2>
             <div className="font-mono text-sm leading-relaxed border-l-4 border-black pl-4 py-2">
               <h3 className="font-bold text-lg mb-2 uppercase">Asal Nama</h3>
@@ -22,7 +22,7 @@ export const AboutSection: React.FC = () => {
 
           {/* Right Column: Philosophy */}
           <div className="md:w-2/3">
-            <WindowCard title="philosophy.md" date="VISION" className="h-full">
+            <WindowCard title="philosophy.md" date="VISION" className="h-full shadow-retro-lg">
               <div className="space-y-8">
                 <div>
                   <div className="flex items-center gap-3 mb-3">

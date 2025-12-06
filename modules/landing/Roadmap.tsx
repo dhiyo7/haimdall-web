@@ -37,7 +37,7 @@ export const Roadmap: React.FC = () => {
           </div>
 
           <div className="md:w-1/2 w-full">
-            <WindowCard title="STATUS_LOG - ROADMAP_TIMELINE.EXE" date="FUTURE" className="w-full">
+            <WindowCard title="STATUS_LOG - ROADMAP_TIMELINE.EXE" date="FUTURE" className="w-full shadow-retro-lg">
               <Accordion defaultOpenIndex={0}>
                 {roadmapData.map((phase, phaseIndex) => (
                   <AccordionItem key={phaseIndex} title={phase.phase}>

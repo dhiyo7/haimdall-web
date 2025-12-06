@@ -17,7 +17,7 @@ export const VisualIntelligenceSection: React.FC = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
           {otherFeatures.map((feature, index) => (
-            <WindowCard key={index} title={feature.title} noPadding>
+            <WindowCard key={index} title={feature.title} noPadding className="shadow-retro-lg">
               <div className="p-8" style={{ backgroundImage: 'radial-gradient(rgba(223, 223, 223, 0.3) 1px, transparent 1px)', backgroundSize: '1rem 1rem' }}>
                 <div className="border-2 border-black shadow-[8px_8px_0_0_#000]">
                   <div className="bg-white font-mono text-sm text-black p-4 leading-relaxed">
