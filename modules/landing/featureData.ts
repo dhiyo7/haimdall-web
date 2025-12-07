@@ -50,6 +50,22 @@ export const languageFeatures = [
     script: [
       'TEKAN TOMBOL SISTEM “Back”'
     ]
+  },
+  {
+    title: "Dynamic Resilience",
+    description: "Sistem asersi pintar. Robot bisa terus berjalan walau ada error kecil (Soft Assert) atau berhenti jika fatal (Hard Assert).",
+    script: [
+      'Pastikan muncul "Promo"',
+      'Wajib muncul "Login Berhasil"'
+    ]
+  },
+  {
+    title: "Smart Selectors",
+    description: "Menargetkan elemen sulit seperti tombol melayang (FAB) atau elemen tanpa ID menggunakan urutan.",
+    script: [
+      'Ketuk tombol "FAB"',
+      'Ketik "123" pada kolom "urutan 1"'
+    ]
   }
 ];
 
@@ -70,7 +86,7 @@ export const syntaxHighlight = (line: string) => {
 
   const keywords = [
     'SIMPAN', 'KE', 'JIKA', 'AKHIR JIKA', 'ULANGI', 'KALI:', 'AKHIR ULANGI',
-    'JALANKAN', 'TEKAN TOMBOL SISTEM', 'Buka', 'Ketik', 'Ketuk', 'Pastikan'
+    'JALANKAN', 'TEKAN TOMBOL SISTEM', 'Buka', 'Ketik', 'Ketuk', 'Pastikan', 'Wajib', 'FAB', 'urutan'
   ];
 
   const keywordPattern = keywords.join('|').replace(/ /g, '\\s+'); // Handle spaces in keywords like AKHIR JIKA
